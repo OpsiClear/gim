@@ -54,12 +54,44 @@ Go to [Huggingface](https://huggingface.co/spaces/xuelunshen/gim-online) to quic
 
 ## ⚙️ Environment
 
-Use the following command to create the environment
+### Quick Setup with UV
 
 ```bash
-conda create -f environment.yaml
-conda activate gim
+# Install uv if not already installed
+pip install uv
+
+# Clone the repository with submodules for pycolmap
+git clone --recursive https://github.com/xuelunshen/gim.git
+cd gim
+
+# Install dependencies
+uv sync
 ```
+
+### Installing pycolmap (Required for 3D Reconstruction)
+
+<details>
+<summary><b>[ Linux/macOS ]</b></summary>
+
+```bash
+# Install COLMAP first following official guide, then:
+uv pip install pycolmap
+```
+
+</details>
+
+<details>
+<summary><b>[ Windows with VCPKG ]</b></summary>
+
+```powershell
+# VCPKG and COLMAP are included in ./external/
+# Install pycolmap from the local source:
+uv pip install ./external/colmap `
+    --config-settings="cmake.define.CMAKE_TOOLCHAIN_FILE=./external/vcpkg/scripts/buildsystems/vcpkg.cmake" `
+    --config-settings="cmake.define.VCPKG_TARGET_TRIPLET=x64-windows"
+```
+
+</details>
 
 ## 🔨 How to Use the `GIM` Series Matching Network
 
@@ -247,21 +279,25 @@ python train.py --num_nodes 1 --gpus $GPUS --max_epochs 50 --maxlen 938240 93824
 
 ## 🕋 3D Reconstruction
 
-The code for 3D reconstruction in this repository is implemented based on [hloc](https://github.com/cvg/Hierarchical-Localization). 
+The code for 3D reconstruction in this repository is implemented based on [hloc](https://github.com/cvg/Hierarchical-Localization).
 
-First, install [colmap](https://colmap.github.io/) and [pycolmap](https://github.com/colmap/pycolmap) according to hloc's README.
+### Prerequisites
 
-Then, download the [semantic-segmentation](https://github.com/CSAILVision/semantic-segmentation-pytorch)'s model parameters (`decoder_epoch_20.pth`) from [Google Drive](https://drive.google.com/file/d/1YswCj58VuVhqEpMKQ_k0QJb3_mMdpF8M/view?usp=sharing) or [OneDrive](https://stuxmueducn-my.sharepoint.com/:u:/g/personal/xuelun_stu_xmu_edu_cn/EUR_XMay5b5FtWelmqXiLi4Bcnv4G1w5b2aYjhqS-Ds_ow) and put the model parameters in the folder `weights`.
+1. **Install COLMAP and pycolmap** - See the [Environment Setup](#⚙️-environment) section above for platform-specific instructions
 
-Next, create some folders. If you want to reconstruct a room in 3D, run the following command:
+2. **Download semantic segmentation model** - Download `decoder_epoch_20.pth` from [Google Drive](https://drive.google.com/file/d/1YswCj58VuVhqEpMKQ_k0QJb3_mMdpF8M/view?usp=sharing) or [OneDrive](https://stuxmueducn-my.sharepoint.com/:u:/g/personal/xuelun_stu_xmu_edu_cn/EUR_XMay5b5FtWelmqXiLi4Bcnv4G1w5b2aYjhqS-Ds_ow) and put it in the `weights/` folder
+
+### Running 3D Reconstruction
+
+1. Create input directory structure for your scene (e.g., "room"):
 
 ```bash
 mkdir -p inputs/room/images
 ```
 
-Then, put images of the room to be reconstructed in 3D into the `images` folder.
+2. Place your images in the `inputs/room/images/` folder
 
-Finally, run the following command to perform a 3D reconstruction:
+3. Run the reconstruction script:
 
 ```bash
 sh reconstruction.sh room gim_dkm

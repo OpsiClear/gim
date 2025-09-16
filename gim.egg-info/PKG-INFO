@@ -1,0 +1,27 @@
+Metadata-Version: 2.1
+Name: gim
+Version: 0.1.0
+Summary: GIM: Learning Generalizable Image Matcher
+Requires-Python: <3.12,>=3.9
+License-File: LICENSE
+Requires-Dist: torch==2.8.0
+Requires-Dist: torchvision>=0.23.0
+Requires-Dist: numpy<2.0,>=1.23.1
+Requires-Dist: einops>=0.3.0
+Requires-Dist: loguru>=0.5.3
+Requires-Dist: joblib>=1.0.1
+Requires-Dist: yacs>=0.1.8
+Requires-Dist: h5py>=3.1.0
+Requires-Dist: matplotlib>=3.5.0
+Requires-Dist: omegaconf>=2.0.0
+Requires-Dist: opencv-python>=4.5.3.56
+Requires-Dist: imagesize>=1.2.0
+Requires-Dist: albumentations>=1.0.1
+Requires-Dist: colour-demosaicing>=0.2.2
+Requires-Dist: kornia>=0.6.10
+Requires-Dist: pytorch-lightning>=1.5.10
+Requires-Dist: torchmetrics>=1.0.0
+Requires-Dist: triton>=3.0.0; sys_platform == "linux"
+Requires-Dist: triton-windows<3.5; sys_platform == "win32"
+Requires-Dist: xformers>=0.0.28
+Requires-Dist: opencv-contrib-python>=4.11.0.86

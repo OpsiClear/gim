@@ -1,0 +1,67 @@
+[project]
+name = "gim"
+version = "0.1.0"
+description = "GIM: Learning Generalizable Image Matcher"
+requires-python = ">=3.9,<3.12"
+dependencies = [
+    # PyTorch with CUDA 12.8 support
+    "torch==2.8.0",
+    "torchvision>=0.23.0",
+    # Core dependencies
+    "numpy>=1.23.1,<2.0",
+    "einops>=0.3.0",
+    "loguru>=0.5.3",
+    "joblib>=1.0.1",
+    "yacs>=0.1.8",
+    "h5py>=3.1.0",
+    "matplotlib>=3.5.0",
+    "omegaconf>=2.0.0",
+    # Computer vision
+    "opencv-python>=4.5.3.56",
+    "imagesize>=1.2.0",
+    "albumentations>=1.0.1",
+    "colour-demosaicing>=0.2.2",
+    "kornia>=0.6.10",
+    # Deep learning
+    "pytorch-lightning>=1.5.10",
+    "torchmetrics>=1.0.0",
+    "triton>=3.0.0; sys_platform == 'linux'",
+    "triton-windows<3.5; sys_platform == 'win32'",
+    "xformers>=0.0.28",
+    "opencv-contrib-python>=4.11.0.86",
+    # 3D Reconstruction - pycolmap installed from ./external/colmap
+    # On Windows: requires VCPKG with CMAKE_TOOLCHAIN_FILE configuration
+    # See CLAUDE.md for installation instructions
+]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.uv]
+# Use PyTorch's CUDA 12.8 index for GPU support
+index-url = "https://pypi.org/simple"
+extra-index-url = ["https://download.pytorch.org/whl/cu128"]
+find-links = ["https://download.pytorch.org/whl/cu128"]
+
+[tool.uv.pip]
+index-strategy = "unsafe-best-match"
+
+[tool.uv.sources]
+# Override PyTorch packages to use CUDA 12.8 versions
+torch = { index = "pytorch-cu128" }
+torchvision = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+
+# Installation Instructions:
+# -------------------------
+# 1. Install UV: pip install uv
+# 2. Create virtual environment: uv venv --python 3.9
+# 3. Activate environment: .venv\Scripts\activate (Windows) or source .venv/bin/activate (Linux/Mac)
+# 4. Install with CUDA 12.8: uv pip install -e .
+#
+# Or install PyTorch directly:
+# uv pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128

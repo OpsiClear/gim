@@ -1,0 +1,25 @@
+torch==2.8.0
+torchvision>=0.23.0
+numpy<2.0,>=1.23.1
+einops>=0.3.0
+loguru>=0.5.3
+joblib>=1.0.1
+yacs>=0.1.8
+h5py>=3.1.0
+matplotlib>=3.5.0
+omegaconf>=2.0.0
+opencv-python>=4.5.3.56
+imagesize>=1.2.0
+albumentations>=1.0.1
+colour-demosaicing>=0.2.2
+kornia>=0.6.10
+pytorch-lightning>=1.5.10
+torchmetrics>=1.0.0
+xformers>=0.0.28
+opencv-contrib-python>=4.11.0.86
+
+[:sys_platform == "linux"]
+triton>=3.0.0
+
+[:sys_platform == "win32"]
+triton-windows<3.5
